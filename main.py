@@ -17,9 +17,16 @@ def main():
     perpus.tambah_item(Buku.dari_string("B002;Struktur Data;2021;Siti Aminah"))
     perpus.tambah_item(Majalah("M001", "Tekno Masa Kini", 2026, 45))
     perpus.tambah_item(Dvd("D001", "Dokumenter Teknologi", 2020, 120))
+    perpus.tambah_item(Buku("B003", "Seporsi Mie Ayam Sebelum Mati", 2025, "Brian Khrisna"))
+    perpus.tambah_item(Buku("E004", "Ikhtiar yang Tak Benar-Benar", 2025, "Nukila Amal"))
+    perpus.tambah_item(Buku("M002", "Laut Bercerita", 2017, "Leila S. Chudori"))
 
-    perpus.tambah_anggota(Anggota("2024001", "Tira"))
-    perpus.tambah_anggota(Anggota("2024002", "Tari"))
+
+    perpus.tambah_anggota(Anggota("14012500003", "Tara"))
+    perpus.tambah_anggota(Anggota("14012500033", "TIri"))
+    perpus.tambah_anggota(Anggota("14012500333", "Turu"))
+    perpus.tambah_anggota(Anggota("14012503333", "Tere"))
+    perpus.tambah_anggota(Anggota("14012533333", "Toro"))
 
     garis("DAFTAR KOLEKSI")
     perpus.tampilkan_koleksi()
@@ -39,13 +46,18 @@ def main():
 
     # --- Transaksi ---
     garis("TRANSAKSI PEMINJAMAN")
-    perpus.pinjam("2024001", "B001")
-    perpus.pinjam("2024001", "M001")
+    perpus.pinjam("14012500003", "B001")
+    perpus.pinjam("14012500033", "M001")
+    perpus.pinjam("14012500333", "B003")
+    perpus.pinjam("14012503333", "E004")
+    perpus.pinjam("14012533333", "M002")
+
+
 
     # --- Tes error (custom exception) ---
     garis("TES ERROR HANDLING")
     try:
-        perpus.pinjam("2024002", "B001")      # sudah dipinjam Andi
+        perpus.pinjam("14012500033", "B001")      # sudah dipinjam Andi
     except PerpustakaanError as e:
         print("❌", e)
 
@@ -54,16 +66,13 @@ def main():
     except PerpustakaanError as e:
         print("❌", e)
 
-    try:
-        Buku("A", "Kode Pendek", 2020, "Anonim")
-    except PerpustakaanError as e:
-        print("❌", e)
 
     # --- Pengembalian (simulasi telat 10 hari) ---
     garis("PENGEMBALIAN")
+    telat_3_hari = date.today() + timedelta(days=3)
     telat_10_hari = date.today() + timedelta(days=10)
-    perpus.kembalikan("2024001", "B001", telat_10_hari)
-    perpus.kembalikan("2024001", "M001", telat_10_hari)
+    perpus.kembalikan("14012500003", "B001", telat_3_hari)
+    perpus.kembalikan("14012500033", "M001", telat_10_hari)
 
     garis("STATUS ANGGOTA")
     for a in perpus.anggota:
